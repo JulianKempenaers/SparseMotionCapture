@@ -2,13 +2,21 @@
 
 A real-time video capture tool that stores only moving pixels in sparse matrix format to drastically reduce experimental data file sizes.
 
-## Features
-- Captures video at 5 frames per second (fps).
-- Detects moving pixels by comparing each frame to a key background frame.
-- Saves only detected pixels as sparse matrices (BSR format) in compressed .npz files.
-- Runs in real-time during video capture.
-- Ideal for experimental setups with a static background.
+## Summary
+In home surveillance or research setups with a fixed camera, most footage consists of a static background with occasional movement. This tool saves only the moving parts, enabling storage of hours of footage without wasting space on empty frames. This tool runs live in the backgorund while footage is recorded, so there is no need to manually sort through footage afterwards.
 
+## Technical details
+### JK_recordvideo.py:
+- Captures video at max 5 frames per second (fps).
+- Periodically saves key frames (Full frames)
+- Compares each new frame to the most recent key frame to detect motion.
+- Saves only the detected (changing) pixels as sparse matrices (BSR format) in compressed .npz files.
+- Runs in real-time during video capture.
+- Ideal for experimental setups or surveillance cameras with a static background and fixed camera.
+
+### NpzToMp4.py:
+- Converts the compressed .npz files back into .mp4 videos for viewing and analysis.
+- .mp4 files are larger in size. For long-term storage, keep data in .npz format. Use .mp4 only for temporary playback or review.
 
 ### License
 [MIT License](LICENSE)
