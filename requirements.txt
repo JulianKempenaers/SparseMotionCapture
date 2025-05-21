@@ -1,0 +1,6 @@
+opencv-python
+numpy
+imageio
+picamera2
+scipy
+scikit-image
