@@ -8,7 +8,7 @@ A real-time video capture tool that stores only moving pixels in sparse matrix f
 In home surveillance or research setups with a fixed camera, most footage consists of a static background with occasional movement. This tool saves only the moving parts, enabling storage of hours of footage without wasting space on empty frames. This tool runs live in the backgorund while footage is recorded, so there is no need to manually sort through footage afterwards.
 
 ## Technical details
-### [JK_recordvideo.py](JK_recordvideo.py):
+### [SparseMotionCapture.py](SparseMotionCapture.py):
 - Captures video at max 5 frames per second (fps).
 - Periodically saves key frames (Full frames)
 - Compares each new frame to the most recent key frame to detect motion.
