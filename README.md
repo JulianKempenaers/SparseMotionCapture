@@ -11,4 +11,4 @@ A real-time video capture tool that stores only moving pixels in sparse matrix f
 
 
 ### License
-[MIT License](LICENCE)
+[MIT License](LICENSE)
