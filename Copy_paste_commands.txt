@@ -1,0 +1,126 @@
+#This file is designed to aid Raspberry Pi setup. Please do not blindly copy-paste these commands. 
+#This file is to be used in combination with the instruction manual only. 
+
+#####################################
+Update and Upgrade
+#####################################
+sudo apt update
+
+sudo apt full-upgrade
+
+sudo reboot
+
+
+#####################################
+Static IP on raspberry pi
+#####################################
+sudo nmcli c mod "Wired connection 1" ipv4.addresses 192.168.22.30/24 ipv4.method manual !!CHANGE THE IP!
+
+sudo nmcli con mod "Wired connection 1" ipv4.gateway 192.168.22.1 
+
+sudo nmcli con mod "Wired connection 1" ipv4.dns "8.8.8.8,8.8.4.4" 
+
+sudo nmcli c down "Wired connection 1" && sudo nmcli c up "Wired connection 1"
+
+
+ping 192.168.22.1
+
+ping 192.168.22.2
+
+
+#####################################
+mounting BEEDRIVE on raspberry pi
+#####################################
+
+sudo mkdir -p /mnt/BEEDRIVE
+
+sudo mkdir -p /etc/samba
+
+sudo nano /etc/samba/credentials
+
+username=RASPBERRYPI
+password=mc2”aEx% 
+
+
+sudo chmod 600 /etc/samba/credentials
+
+sudo cp /etc/fstab /etc/fstab.bak
+
+sudo nano /etc/fstab
+
+
+//192.168.22.2/BEEDRIVE /mnt/BEEDRIVE cifs credentials=/etc/samba/credentials,uid=1000,gid=1000 0 0
+
+sudo reboot
+
+ls /mnt/BEEDRIVE
+
+
+#################################################
+#Installing packages on Pi
+#################################################
+#Copy and paste all lines in one go: 
+
+
+sudo apt update
+sudo apt install -y \
+python3-pip \
+python3-paho-mqtt \
+python3-picamera2 \
+python3-numpy \
+python3-scipy \
+python3-opencv \
+python3-skimage \
+python3-rpi.gpio \
+ntpdate
+
+################################################
+#Consistent datetime commands
+################################################
+#copy and paste line by line:
+
+sudo systemctl enable systemd-timesyncd
+
+sudo systemctl start systemd-timesyncd
+
+sudo nano /etc/systemd/timesyncd.conf
+
+NTP=192.168.22.2
+
+sudo timedatectl set-ntp true
+
+sudo crontab -e
+
+1
+
+0 * * * * /usr/sbin/ntpdate -u 192.168.22.2
+
+sudo /usr/sbin/ntpdate -u 192.168.22.2
+
+sudo systemctl restart systemd-timesyncd
+
+timedatectl status
+
+
+#################################################
+#Adding a daemon that starts at boot on raspberry pi
+#################################################
+# Copy and paste line by line:
+
+
+sudo cp /mnt/BEEDRIVE/PiCommunication/RecordingScripts/Pi_SetUp/WatcherServicePi.txt /etc/systemd/system/watcher.service
+
+chmod +x /mnt/BEEDRIVE/PiCommunication/RecordingScripts/start_watcher.sh
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable watcher.service
+
+sudo reboot
+
+
+
+
+
+
+
