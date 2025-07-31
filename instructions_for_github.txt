@@ -1,0 +1,55 @@
+#####################################
+Update and Upgrade
+#####################################
+sudo apt update
+
+sudo apt full-upgrade
+
+sudo reboot
+
+
+#####################################
+Static IP on raspberry pi
+#####################################
+sudo nmcli c mod "Wired connection 1" ipv4.addresses 192.168.22.30/24 ipv4.method manual !!CHANGE THE IP!
+
+sudo nmcli con mod "Wired connection 1" ipv4.gateway 192.168.22.1 
+
+sudo nmcli con mod "Wired connection 1" ipv4.dns "8.8.8.8,8.8.4.4" 
+
+sudo nmcli c down "Wired connection 1" && sudo nmcli c up "Wired connection 1"
+
+
+ping 192.168.22.1
+
+ping 192.168.22.2
+
+
+#####################################
+mounting BEEDRIVE on raspberry pi
+#####################################
+
+sudo mkdir -p /mnt/BEEDRIVE
+
+sudo mkdir -p /etc/samba
+
+sudo nano /etc/samba/credentials
+
+username=RASPBERRYPI
+password=mc2”aEx% 
+
+
+sudo chmod 600 /etc/samba/credentials
+
+sudo cp /etc/fstab /etc/fstab.bak
+
+sudo nano /etc/fstab
+
+
+//192.168.22.2/BEEDRIVE /mnt/BEEDRIVE cifs credentials=/etc/samba/credentials,uid=1000,gid=1000 0 0
+
+sudo reboot
+
+ls /mnt/BEEDRIVE
+
+
