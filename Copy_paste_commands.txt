@@ -39,7 +39,7 @@ sudo mkdir -p /etc/samba
 sudo nano /etc/samba/credentials
 
 username=RASPBERRYPI
-password=mc2”aEx% 
+password=mc2”aEx%
 
 
 sudo chmod 600 /etc/samba/credentials
